@@ -15,8 +15,8 @@ SESSIONS_FILE = os.path.join(BASE_DIR, "sessions.json")
 
 # ====================== FRONTEND ROUTES ======================
 @app.route('/')
-def serve_frontend():
-    return "MindMosaic backend is running 🚀"
+def home():
+    return jsonify({"status": "MindMosaic backend is running 🚀"})
 
 @app.route('/style.css')
 def serve_css():
