@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mindmosaic — Chat</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+
+  <style>
+    /* Back button */
+    .back-btn {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      z-index: 200;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(26, 26, 48, 0.85);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(42, 42, 74, 0.8);
+      color: #94a3b8;
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .back-btn:hover {
+      background: rgba(124, 58, 237, 0.2);
+      border-color: rgba(124, 58, 237, 0.5);
+      color: #e2e8f0;
+      transform: translateX(-2px);
+    }
+
+    /* Push sidebar content down so it doesn't overlap the back btn */
+    .sidebar {
+      padding-top: 70px !important;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Animated background orbs -->
+  <div class="bg-orb orb1"></div>
+  <div class="bg-orb orb2"></div>
+  <div class="bg-orb orb3"></div>
+
+  <!-- Back to landing page -->
+  <a href="index.html" class="back-btn">
+    <i class="fa-solid fa-arrow-left"></i> Home
+  </a>
+
+  <div class="app-container">
+
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <div class="logo-icon"><i class="fa-solid fa-brain"></i></div>
+          <span class="logo-text">Mindmosaic <span class="logo-version">3.0</span></span>
+        </div>
+        <button class="sidebar-close" id="sidebarClose"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <button class="new-chat-btn" id="newChatBtn">
+        <i class="fa-solid fa-plus"></i> New Session
+      </button>
+
+      <div class="sidebar-section-title">Recent Sessions</div>
+      <div class="sessions-list" id="sessionsList">
+        <div class="sessions-loading"><i class="fa-solid fa-circle-notch fa-spin"></i></div>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="mood-check">
+          <div class="mood-label">How are you feeling?</div>
+          <div class="mood-emojis">
+            <button class="mood-btn" data-mood="😢" title="Sad">😢</button>
+            <button class="mood-btn" data-mood="😕" title="Worried">😕</button>
+            <button class="mood-btn" data-mood="😐" title="Okay">😐</button>
+            <button class="mood-btn" data-mood="🙂" title="Good">🙂</button>
+            <button class="mood-btn" data-mood="😄" title="Great">😄</button>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ===== MAIN AREA ===== -->
+    <main class="main">
+
+      <!-- Top bar -->
+      <header class="topbar">
+        <button class="menu-btn" id="menuBtn"><i class="fa-solid fa-bars"></i></button>
+        <div class="topbar-center">
+          <div class="status-dot"></div>
+          <span>Mindmosaic is here for you</span>
+        </div>
+        <button class="clear-btn" id="clearBtn" title="Clear chat">
+          <i class="fa-solid fa-broom"></i>
+        </button>
+      </header>
+
+      <!-- Chat messages -->
+      <div class="chat-area" id="chatArea">
+        <!-- Welcome screen -->
+        <div class="welcome" id="welcomeScreen">
+          <div class="welcome-icon"><i class="fa-solid fa-brain"></i></div>
+          <h1>Hi, I'm Mindmosaic 🌿</h1>
+          <p>Your personal mental health companion.<br />I'm here to listen, support, and help you find calm.</p>
+          <div class="suggestions">
+            <button class="suggestion-chip" data-text="I've been feeling really stressed lately">😤 I'm stressed lately</button>
+            <button class="suggestion-chip" data-text="I feel lonely and don't know what to do">🥺 I feel lonely</button>
+            <button class="suggestion-chip" data-text="Can you teach me a breathing exercise?">🌬️ Breathing exercise</button>
+            <button class="suggestion-chip" data-text="I can't sleep at night, I keep overthinking">😴 Can't sleep</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Typing indicator -->
+      <div class="typing-indicator" id="typingIndicator" style="display:none">
+        <div class="typing-avatar"><i class="fa-solid fa-brain"></i></div>
+        <div class="typing-dots">
+          <span></span><span></span><span></span>
+        </div>
+        <span class="typing-text">Mindmosaic is thinking...</span>
+      </div>
+
+      <!-- Input bar -->
+      <div class="input-area">
+        <div class="input-box">
+          <textarea id="userInput" placeholder="Share what's on your mind... (Press Enter to send)" rows="1"></textarea>
+          <button class="send-btn" id="sendBtn">
+            <i class="fa-solid fa-paper-plane"></i>
+          </button>
+        </div>
+        <div class="input-footer">Mindmosaic provides support, not medical advice. For emergencies call 1122 🇵🇰</div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Crisis modal -->
+  <div class="modal-overlay" id="crisisModal" style="display:none">
+    <div class="modal">
+      <div class="modal-icon">❤️</div>
+      <h2>You Matter</h2>
+      <p>It sounds like you're going through something really difficult. Please reach out to someone right now.</p>
+      <div class="helplines">
+        <a href="tel:0317-4288665" class="helpline-btn"><i class="fa-solid fa-phone"></i> Umang PK: 0317-4288665</a>
+        <a href="https://findahelpline.com" target="_blank" class="helpline-btn secondary"><i class="fa-solid fa-globe"></i> Find a helpline</a>
+      </div>
+      <button class="modal-close" id="modalClose">I'm okay, continue chatting</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+
+  <script>
+    // Clear chat button
+    document.getElementById('clearBtn')?.addEventListener('click', async () => {
+      await createNewSession();
+      loadSessions();
+    });
+  </script>
+
+</body>
+
+</html>

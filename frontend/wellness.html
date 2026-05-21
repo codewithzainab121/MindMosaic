@@ -1,0 +1,2183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mindmosaic — Wellness Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,800;1,9..144,300&family=DM+Sans:wght@300;400;500;600&display=swap"
+    rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #1a1a18;
+      --paper: #f5f1ea;
+      --paper2: #eee9e0;
+      --sage: #3d6147;
+      --sage-light: #6a9b74;
+      --sage-pale: #e8f0ea;
+      --amber: #d4892a;
+      --amber-pale: #f5d9a8;
+      --blush: #e8b4a0;
+      --blush-pale: #faeae5;
+      --slate: #4a5568;
+      --muted: #8a9080;
+      --blue: #3b82f6;
+      --blue-pale: #dbeafe;
+      --purple: #7c3aed;
+      --purple-pale: #ede9fe;
+      --teal: #0891b2;
+      --teal-pale: #cffafe;
+      --red: #ef4444;
+      --green: #10b981;
+      --radius: 20px;
+      --radius-sm: 12px;
+      --shadow: 0 4px 24px rgba(26, 26, 24, 0.08);
+      --shadow-lg: 0 12px 48px rgba(26, 26, 24, 0.14);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0.4;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 3rem;
+      background: rgba(245, 241, 234, 0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(61, 97, 71, 0.1);
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      text-decoration: none;
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--sage);
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      font-size: 1.1rem;
+    }
+
+    .logo-text {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: var(--ink);
+    }
+
+    .logo-text span {
+      color: var(--sage);
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: .75rem;
+      align-items: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      padding: .6rem 1.2rem;
+      border-radius: 100px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .88rem;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      transition: all .25s;
+      text-decoration: none;
+    }
+
+    .btn-sage {
+      background: var(--sage);
+      color: #fff;
+    }
+
+    .btn-sage:hover {
+      background: var(--sage-light);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(61, 97, 71, .3);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--sage);
+      border: 1.5px solid var(--sage);
+    }
+
+    .btn-ghost:hover {
+      background: var(--sage);
+      color: #fff;
+    }
+
+    /* ── LAYOUT ── */
+    .page-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 5rem;
+    }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      text-align: center;
+      padding: 2rem 0 3rem;
+    }
+
+    .page-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      background: var(--amber-pale);
+      color: var(--amber);
+      border-radius: 100px;
+      padding: .35rem 1rem;
+      font-size: .82rem;
+      font-weight: 500;
+      margin-bottom: 1rem;
+    }
+
+    .page-header h1 {
+      font-family: 'Fraunces', serif;
+      font-weight: 800;
+      font-size: clamp(2rem, 5vw, 3rem);
+      line-height: 1.1;
+      color: var(--ink);
+      margin-bottom: .75rem;
+    }
+
+    .page-header p {
+      color: var(--slate);
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    /* ── SECTION TITLE ── */
+    .section-label {
+      font-family: 'Fraunces', serif;
+      font-weight: 600;
+      font-size: 1.4rem;
+      color: var(--ink);
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+
+    .section-label span {
+      font-size: 1.4rem;
+    }
+
+    /* ─────────────────────────────────────────
+       1. MOOD TRACKER
+    ───────────────────────────────────────── */
+    .mood-section {
+      background: #fff;
+      border-radius: var(--radius);
+      border: 1px solid rgba(61, 97, 71, .12);
+      padding: 2rem;
+      margin-bottom: 2.5rem;
+      box-shadow: var(--shadow);
+    }
+
+    .mood-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .mood-label-text {
+      font-size: .9rem;
+      color: var(--slate);
+      font-weight: 500;
+      min-width: 120px;
+    }
+
+    .mood-scale {
+      display: flex;
+      gap: .5rem;
+      flex-wrap: wrap;
+    }
+
+    .mood-num {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid var(--paper2);
+      background: var(--paper);
+      color: var(--slate);
+      font-size: .9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .2s;
+      display: grid;
+      place-items: center;
+    }
+
+    .mood-num:hover {
+      border-color: var(--sage);
+      color: var(--sage);
+      transform: scale(1.1);
+    }
+
+    .mood-num.selected {
+      background: var(--sage);
+      border-color: var(--sage);
+      color: #fff;
+      transform: scale(1.15);
+    }
+
+    .mood-num[data-v="1"],
+    .mood-num[data-v="2"],
+    .mood-num[data-v="3"] {
+      --c: var(--red);
+    }
+
+    .mood-num[data-v="4"],
+    .mood-num[data-v="5"] {
+      --c: #f59e0b;
+    }
+
+    .mood-num[data-v="6"],
+    .mood-num[data-v="7"] {
+      --c: var(--teal);
+    }
+
+    .mood-num[data-v="8"],
+    .mood-num[data-v="9"],
+    .mood-num[data-v="10"] {
+      --c: var(--green);
+    }
+
+    .mood-num.selected {
+      background: var(--c, var(--sage));
+      border-color: var(--c, var(--sage));
+    }
+
+    .mood-note {
+      width: 100%;
+      padding: .75rem 1rem;
+      border: 1.5px solid var(--paper2);
+      border-radius: var(--radius-sm);
+      font-family: 'DM Sans', sans-serif;
+      font-size: .9rem;
+      color: var(--ink);
+      background: var(--paper);
+      resize: none;
+      outline: none;
+      transition: border-color .2s;
+    }
+
+    .mood-note:focus {
+      border-color: var(--sage);
+    }
+
+    .mood-save-btn {
+      background: var(--sage);
+      color: #fff;
+      border: none;
+      padding: .7rem 1.5rem;
+      border-radius: 100px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .9rem;
+      font-weight: 500;
+      cursor: pointer;
+      margin-top: .75rem;
+      transition: all .2s;
+    }
+
+    .mood-save-btn:hover {
+      background: var(--sage-light);
+      transform: translateY(-1px);
+    }
+
+    /* mood history chart */
+    .mood-history-title {
+      font-size: .85rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      margin: 1.5rem 0 .75rem;
+    }
+
+    .mood-chart {
+      display: flex;
+      align-items: flex-end;
+      gap: 6px;
+      height: 80px;
+    }
+
+    .mood-bar-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      flex: 1;
+    }
+
+    .mood-bar {
+      width: 100%;
+      border-radius: 4px;
+      transition: height .4s ease;
+      min-height: 4px;
+    }
+
+    .mood-bar-date {
+      font-size: 9px;
+      color: var(--muted);
+      writing-mode: horizontal-tb;
+    }
+
+    /* ─────────────────────────────────────────
+       2. CHECK-IN PROGRESS
+    ───────────────────────────────────────── */
+    .progress-section {
+      background: #fff;
+      border-radius: var(--radius);
+      border: 1px solid rgba(61, 97, 71, .12);
+      padding: 2rem;
+      margin-bottom: 2.5rem;
+      box-shadow: var(--shadow);
+    }
+
+    .progress-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .progress-card {
+      background: var(--paper);
+      border-radius: var(--radius-sm);
+      padding: 1.25rem;
+      border: 1px solid var(--paper2);
+    }
+
+    .progress-card-title {
+      font-size: .8rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      margin-bottom: .5rem;
+    }
+
+    .progress-card-value {
+      font-family: 'Fraunces', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .progress-card-sub {
+      font-size: .8rem;
+      color: var(--slate);
+      margin-top: .25rem;
+    }
+
+    .progress-bar-wrap {
+      margin-top: .5rem;
+      background: var(--paper2);
+      border-radius: 100px;
+      height: 6px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      border-radius: 100px;
+      background: var(--sage);
+      transition: width .6s ease;
+    }
+
+    /* streak calendar */
+    .streak-calendar {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+      margin-top: .5rem;
+    }
+
+    .streak-day {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      display: grid;
+      place-items: center;
+      font-size: .7rem;
+      font-weight: 600;
+      cursor: default;
+    }
+
+    .streak-day.done {
+      background: var(--sage);
+      color: #fff;
+    }
+
+    .streak-day.today {
+      background: var(--amber);
+      color: #fff;
+    }
+
+    .streak-day.empty {
+      background: var(--paper2);
+      color: var(--muted);
+    }
+
+    /* session log */
+    .session-log {
+      display: flex;
+      flex-direction: column;
+      gap: .6rem;
+    }
+
+    .session-log-item {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      padding: .75rem 1rem;
+      border-radius: var(--radius-sm);
+      background: var(--paper);
+      border: 1px solid var(--paper2);
+      font-size: .88rem;
+    }
+
+    .session-log-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .session-log-item .date {
+      color: var(--muted);
+      font-size: .78rem;
+      margin-left: auto;
+    }
+
+    .session-log-mood-badge {
+      padding: .2rem .6rem;
+      border-radius: 100px;
+      font-size: .75rem;
+      font-weight: 600;
+    }
+
+    /* ─────────────────────────────────────────
+       3. STRESS RELIEF GAMES
+    ───────────────────────────────────────── */
+    .games-section {
+      background: #fff;
+      border-radius: var(--radius);
+      border: 1px solid rgba(61, 97, 71, .12);
+      padding: 2rem;
+      margin-bottom: 2.5rem;
+      box-shadow: var(--shadow);
+    }
+
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .game-card {
+      border-radius: var(--radius-sm);
+      padding: 1.5rem 1rem;
+      border: 2px solid var(--paper2);
+      cursor: pointer;
+      text-align: center;
+      transition: all .2s;
+      background: var(--paper);
+    }
+
+    .game-card:hover {
+      border-color: var(--sage);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    .game-card.active {
+      border-color: var(--sage);
+      background: var(--sage-pale);
+    }
+
+    .game-card .game-icon {
+      font-size: 2.2rem;
+      margin-bottom: .5rem;
+    }
+
+    .game-card .game-name {
+      font-weight: 600;
+      font-size: .9rem;
+      color: var(--ink);
+    }
+
+    .game-card .game-desc {
+      font-size: .75rem;
+      color: var(--muted);
+      margin-top: .25rem;
+    }
+
+    /* Game area */
+    .game-area {
+      background: var(--paper);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--paper2);
+      padding: 1.5rem;
+      min-height: 200px;
+      display: none;
+    }
+
+    .game-area.visible {
+      display: block;
+    }
+
+    /* Bubble pop game */
+    #bubble-game {
+      position: relative;
+      height: 260px;
+      overflow: hidden;
+      border-radius: var(--radius-sm);
+      background: linear-gradient(135deg, #e8f5f0, #d4eee8);
+    }
+
+    .bubble {
+      position: absolute;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: transform .1s;
+      display: grid;
+      place-items: center;
+      font-size: 1.5rem;
+      animation: floatUp linear forwards;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .bubble:hover {
+      transform: scale(1.1);
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+
+      to {
+        transform: translateY(-350px) scale(0.8);
+        opacity: 0;
+      }
+    }
+
+    .game-score {
+      font-family: 'Fraunces', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--sage);
+      margin-bottom: .75rem;
+    }
+
+    .game-instructions {
+      font-size: .85rem;
+      color: var(--slate);
+      margin-bottom: 1rem;
+    }
+
+    /* Color match game */
+    #color-game {
+      text-align: center;
+      padding: 1rem;
+    }
+
+    .color-word {
+      font-family: 'Fraunces', serif;
+      font-size: 3rem;
+      font-weight: 800;
+      margin: 1rem 0;
+      letter-spacing: .05em;
+      transition: color .3s;
+    }
+
+    .color-options {
+      display: flex;
+      gap: .75rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+
+    .color-opt {
+      padding: .65rem 1.4rem;
+      border-radius: 100px;
+      font-weight: 600;
+      font-size: .9rem;
+      cursor: pointer;
+      border: none;
+      transition: transform .15s, box-shadow .15s;
+    }
+
+    .color-opt:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, .15);
+    }
+
+    .color-feedback {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-top: .75rem;
+      height: 1.4rem;
+    }
+
+    /* Breathing dots game */
+    #dot-game {
+      text-align: center;
+      padding: 1rem;
+    }
+
+    .dot-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+      max-width: 260px;
+      margin: 0 auto 1rem;
+    }
+
+    .dot-cell {
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: var(--paper2);
+      cursor: pointer;
+      transition: all .2s;
+      border: 2px solid transparent;
+    }
+
+    .dot-cell:hover {
+      background: var(--sage-pale);
+      border-color: var(--sage-light);
+    }
+
+    .dot-cell.lit {
+      background: var(--sage);
+      transform: scale(1.1);
+    }
+
+    .dot-cell.wrong {
+      background: var(--red);
+    }
+
+    .dot-game-msg {
+      font-size: .9rem;
+      color: var(--slate);
+      margin-top: .5rem;
+    }
+
+    /* ─────────────────────────────────────────
+       4. NATURE SOUNDS
+    ───────────────────────────────────────── */
+    .sounds-section {
+      background: #fff;
+      border-radius: var(--radius);
+      border: 1px solid rgba(61, 97, 71, .12);
+      padding: 2rem;
+      margin-bottom: 2.5rem;
+      box-shadow: var(--shadow);
+    }
+
+    .sounds-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1rem;
+    }
+
+    .sound-card {
+      border-radius: var(--radius-sm);
+      padding: 1.25rem .75rem;
+      border: 2px solid var(--paper2);
+      cursor: pointer;
+      text-align: center;
+      transition: all .25s;
+      background: var(--paper);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sound-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--card-bg, var(--sage-pale));
+      opacity: 0;
+      transition: opacity .3s;
+    }
+
+    .sound-card:hover::before {
+      opacity: .5;
+    }
+
+    .sound-card.playing::before {
+      opacity: 1;
+    }
+
+    .sound-card>* {
+      position: relative;
+      z-index: 1;
+    }
+
+    .sound-icon {
+      font-size: 2.4rem;
+      margin-bottom: .5rem;
+      display: block;
+    }
+
+    .sound-name {
+      font-weight: 600;
+      font-size: .88rem;
+      color: var(--ink);
+    }
+
+    .sound-playing-badge {
+      display: none;
+      margin-top: .4rem;
+      font-size: .72rem;
+      font-weight: 600;
+      color: var(--sage);
+      letter-spacing: .03em;
+    }
+
+    .sound-card.playing .sound-playing-badge {
+      display: block;
+    }
+
+    .sound-waves {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      margin-top: .4rem;
+      height: 16px;
+    }
+
+    .sound-wave-bar {
+      width: 3px;
+      border-radius: 2px;
+      background: var(--sage);
+      opacity: 0;
+      animation: waveBounce .6s ease-in-out infinite;
+    }
+
+    .sound-card.playing .sound-wave-bar {
+      opacity: 1;
+    }
+
+    .sound-wave-bar:nth-child(1) {
+      animation-delay: 0s;
+    }
+
+    .sound-wave-bar:nth-child(2) {
+      animation-delay: .1s;
+    }
+
+    .sound-wave-bar:nth-child(3) {
+      animation-delay: .2s;
+    }
+
+    .sound-wave-bar:nth-child(4) {
+      animation-delay: .1s;
+    }
+
+    .sound-wave-bar:nth-child(5) {
+      animation-delay: .05s;
+    }
+
+    @keyframes waveBounce {
+
+      0%,
+      100% {
+        height: 4px;
+      }
+
+      50% {
+        height: 14px;
+      }
+    }
+
+    .volume-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 1.25rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--paper2);
+    }
+
+    .volume-label {
+      font-size: .85rem;
+      color: var(--slate);
+      font-weight: 500;
+      min-width: 60px;
+    }
+
+    input[type="range"] {
+      flex: 1;
+      -webkit-appearance: none;
+      height: 4px;
+      background: var(--paper2);
+      border-radius: 100px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      background: var(--sage);
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(61, 97, 71, .3);
+    }
+
+    .timer-row {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      margin-top: .75rem;
+    }
+
+    .timer-label {
+      font-size: .85rem;
+      color: var(--slate);
+      font-weight: 500;
+    }
+
+    .timer-btn {
+      padding: .35rem .85rem;
+      border-radius: 100px;
+      border: 1.5px solid var(--paper2);
+      background: var(--paper);
+      color: var(--slate);
+      font-size: .8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all .2s;
+    }
+
+    .timer-btn:hover {
+      border-color: var(--sage);
+      color: var(--sage);
+    }
+
+    .timer-btn.active {
+      background: var(--sage);
+      border-color: var(--sage);
+      color: #fff;
+    }
+
+    .timer-countdown {
+      font-family: 'Fraunces', serif;
+      font-size: 1rem;
+      color: var(--sage);
+      font-weight: 600;
+      margin-left: auto;
+    }
+
+    /* ─────────────────────────────────────────
+       5. ANXIETY RELIEF — BREATHING
+    ───────────────────────────────────────── */
+    .breathing-section {
+      background: #fff;
+      border-radius: var(--radius);
+      border: 1px solid rgba(61, 97, 71, .12);
+      padding: 2rem;
+      margin-bottom: 2.5rem;
+      box-shadow: var(--shadow);
+    }
+
+    .breathing-tabs {
+      display: flex;
+      gap: .5rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .breath-tab {
+      padding: .5rem 1.1rem;
+      border-radius: 100px;
+      border: 1.5px solid var(--paper2);
+      background: var(--paper);
+      color: var(--slate);
+      font-size: .85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all .2s;
+    }
+
+    .breath-tab:hover {
+      border-color: var(--sage);
+      color: var(--sage);
+    }
+
+    .breath-tab.active {
+      background: var(--sage);
+      border-color: var(--sage);
+      color: #fff;
+    }
+
+    /* The main breathing card */
+    .breath-card {
+      background: linear-gradient(135deg, #f0f7f2, #e8f4ea);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      text-align: center;
+      border: 1px solid rgba(61, 97, 71, .1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .breath-card::before {
+      content: '';
+      position: absolute;
+      inset: -50%;
+      background: radial-gradient(circle, rgba(61, 97, 71, .06) 0%, transparent 70%);
+      animation: breathBg 8s ease-in-out infinite;
+    }
+
+    @keyframes breathBg {
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.3);
+      }
+    }
+
+    .breath-card>* {
+      position: relative;
+      z-index: 1;
+    }
+
+    .breath-phase {
+      font-family: 'Fraunces', serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--sage);
+      margin-bottom: .5rem;
+      min-height: 2rem;
+    }
+
+    .breath-instruction {
+      font-size: .9rem;
+      color: var(--slate);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    /* The animated circle */
+    .breath-circle-wrap {
+      width: 200px;
+      height: 200px;
+      margin: 0 auto 1.5rem;
+      position: relative;
+      display: grid;
+      place-items: center;
+    }
+
+    .breath-ring {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 3px solid rgba(61, 97, 71, .15);
+    }
+
+    .breath-ring-progress {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: conic-gradient(var(--sage) 0deg, transparent 0deg);
+      transition: background .1s;
+    }
+
+    .breath-circle {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--sage), var(--sage-light));
+      display: grid;
+      place-items: center;
+      box-shadow: 0 8px 32px rgba(61, 97, 71, .3);
+      transition: transform 4s ease-in-out;
+      position: relative;
+      z-index: 2;
+    }
+
+    .breath-circle.expand {
+      transform: scale(1.25);
+    }
+
+    .breath-circle.hold {
+      transform: scale(1.25);
+    }
+
+    .breath-circle.shrink {
+      transform: scale(1);
+    }
+
+    .breath-circle-inner {
+      text-align: center;
+    }
+
+    .breath-circle-num {
+      font-family: 'Fraunces', serif;
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1;
+    }
+
+    .breath-circle-label {
+      font-size: .7rem;
+      color: rgba(255, 255, 255, .8);
+      font-weight: 500;
+      letter-spacing: .05em;
+    }
+
+    .breath-timer-text {
+      font-size: .85rem;
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+    }
+
+    .breath-start-btn {
+      background: var(--sage);
+      color: #fff;
+      border: none;
+      padding: .85rem 2.5rem;
+      border-radius: 100px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .25s;
+      box-shadow: 0 4px 16px rgba(61, 97, 71, .3);
+    }
+
+    .breath-start-btn:hover {
+      background: var(--sage-light);
+      transform: translateY(-2px);
+    }
+
+    .breath-start-btn.stop {
+      background: #c0614a;
+      box-shadow: 0 4px 16px rgba(192, 97, 74, .3);
+    }
+
+    .breath-cycle-count {
+      font-size: .85rem;
+      color: var(--muted);
+      margin-top: 1rem;
+    }
+
+    /* exercise cards */
+    .activity-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .activity-card {
+      border-radius: var(--radius-sm);
+      padding: 1.25rem;
+      border: 1.5px solid var(--paper2);
+      background: var(--paper);
+      cursor: pointer;
+      transition: all .2s;
+    }
+
+    .activity-card:hover {
+      border-color: var(--sage);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    .activity-card .act-icon {
+      font-size: 1.8rem;
+      margin-bottom: .5rem;
+    }
+
+    .activity-card .act-title {
+      font-weight: 600;
+      font-size: .95rem;
+      color: var(--ink);
+      margin-bottom: .25rem;
+    }
+
+    .activity-card .act-desc {
+      font-size: .8rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .activity-card .act-duration {
+      font-size: .78rem;
+      color: var(--sage);
+      font-weight: 600;
+      margin-top: .5rem;
+    }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--ink);
+      color: #fff;
+      padding: .75rem 1.5rem;
+      border-radius: 100px;
+      font-size: .88rem;
+      z-index: 500;
+      opacity: 0;
+      transition: all .3s;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width:768px) {
+      nav {
+        padding: .9rem 1.25rem;
+      }
+
+      .page-wrap {
+        padding: 1.5rem 1rem 4rem;
+      }
+
+      .mood-chart {
+        height: 60px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="logo">
+      <div class="logo-icon">🧠</div>
+      <span class="logo-text">Mind<span>mosaic</span></span>
+    </a>
+    <div class="nav-actions">
+      <a href="index.html" class="btn btn-ghost" style="font-size:.85rem;">← Home</a>
+      <a href="chat.html" class="btn btn-sage">💬 Chat</a>
+    </div>
+  </nav>
+
+  <div class="page-wrap">
+
+    <!-- PAGE HEADER -->
+    <div class="page-header">
+      <div class="page-badge">✨ Your Wellness Hub</div>
+      <h1>Take care of <em style="font-style:italic;color:var(--sage)">yourself</em> today</h1>
+      <p>Track your mood, relieve stress with games, listen to soothing sounds, and practise breathing — all in one
+        place.</p>
+    </div>
+
+    <!-- ═══════════════════════════════
+         1. MOOD TRACKER
+    ═══════════════════════════════ -->
+    <div class="mood-section">
+      <div class="section-label"><span>😊</span> Daily Mood Check-In</div>
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:1.25rem">How are you feeling right now? Rate from 1
+        (very low) to 10 (amazing).</p>
+
+      <div class="mood-row">
+        <div class="mood-label-text">Today's mood</div>
+        <div class="mood-scale" id="moodScale">
+          <!-- 1–10 buttons generated by JS -->
+        </div>
+      </div>
+
+      <textarea class="mood-note" id="moodNote" rows="2"
+        placeholder="Optional: what's influencing your mood today?"></textarea>
+      <button class="mood-save-btn" id="saveMoodBtn">💾 Save Check-In</button>
+
+      <div class="mood-history-title">Last 14 days</div>
+      <div class="mood-chart" id="moodChart">
+        <!-- bars generated by JS -->
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════
+         2. CHECK-IN PROGRESS
+    ═══════════════════════════════ -->
+    <div class="progress-section">
+      <div class="section-label"><span>📊</span> Your Progress</div>
+
+      <div class="progress-grid">
+        <div class="progress-card">
+          <div class="progress-card-title">🔥 Check-in Streak</div>
+          <div class="progress-card-value" id="streakNum">0</div>
+          <div class="progress-card-sub">days in a row</div>
+        </div>
+        <div class="progress-card">
+          <div class="progress-card-title">📅 Total Check-ins</div>
+          <div class="progress-card-value" id="totalCheckins">0</div>
+          <div class="progress-card-sub">all time</div>
+        </div>
+        <div class="progress-card">
+          <div class="progress-card-title">💚 Avg Mood (7d)</div>
+          <div class="progress-card-value" id="avgMood">—</div>
+          <div class="progress-card-sub">out of 10</div>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar-fill" id="avgMoodBar" style="width:0%"></div>
+          </div>
+        </div>
+        <div class="progress-card">
+          <div class="progress-card-title">🌿 Breathing Sessions</div>
+          <div class="progress-card-value" id="breathSessions">0</div>
+          <div class="progress-card-sub">completed</div>
+        </div>
+      </div>
+
+      <!-- 14-day streak calendar -->
+      <div class="mood-history-title">14-Day Check-In Calendar</div>
+      <div class="streak-calendar" id="streakCalendar"></div>
+
+      <!-- Recent session log -->
+      <div class="mood-history-title" style="margin-top:1.5rem">Recent Check-Ins</div>
+      <div class="session-log" id="sessionLog">
+        <div style="font-size:.85rem;color:var(--muted);padding:.5rem 0">No check-ins saved yet. Start by rating your
+          mood above!</div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════
+         3. STRESS RELIEF GAMES
+    ═══════════════════════════════ -->
+    <div class="games-section">
+      <div class="section-label"><span>🎮</span> Stress Relief Games</div>
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:1.25rem">Quick mindful games to reset your focus and
+        ease tension.</p>
+
+      <div class="games-grid">
+        <div class="game-card active" data-game="bubbles" onclick="selectGame('bubbles',this)">
+          <div class="game-icon">🫧</div>
+          <div class="game-name">Bubble Pop</div>
+          <div class="game-desc">Pop bubbles to release tension</div>
+        </div>
+        <div class="game-card" data-game="colors" onclick="selectGame('colors',this)">
+          <div class="game-icon">🎨</div>
+          <div class="game-name">Color Focus</div>
+          <div class="game-desc">Match the ink colour, not the word</div>
+        </div>
+        <div class="game-card" data-game="dots" onclick="selectGame('dots',this)">
+          <div class="game-icon">✨</div>
+          <div class="game-name">Memory Dots</div>
+          <div class="game-desc">Remember and tap the pattern</div>
+        </div>
+      </div>
+
+      <!-- BUBBLE POP -->
+      <div class="game-area visible" id="game-bubbles">
+        <div class="game-score">Score: <span id="bubbleScore">0</span></div>
+        <div class="game-instructions">Click the bubbles before they float away! 🫧</div>
+        <div id="bubble-game"></div>
+        <button onclick="startBubbleGame()"
+          style="margin-top:.75rem;background:var(--sage);color:#fff;border:none;padding:.6rem 1.4rem;border-radius:100px;cursor:pointer;font-weight:500;font-size:.88rem;">▶
+          Start / Reset</button>
+      </div>
+
+      <!-- COLOR FOCUS -->
+      <div class="game-area" id="game-colors">
+        <div class="game-score">Score: <span id="colorScore">0</span></div>
+        <div class="game-instructions">What is the <strong>colour of the ink</strong>? (Ignore what the word says)</div>
+        <div class="color-word" id="colorWord">RED</div>
+        <div class="color-options" id="colorOptions"></div>
+        <div class="color-feedback" id="colorFeedback"></div>
+        <button onclick="startColorGame()"
+          style="margin-top:.75rem;background:var(--sage);color:#fff;border:none;padding:.6rem 1.4rem;border-radius:100px;cursor:pointer;font-weight:500;font-size:.88rem;">▶
+          Start / Reset</button>
+      </div>
+
+      <!-- MEMORY DOTS -->
+      <div class="game-area" id="game-dots">
+        <div class="game-score">Level: <span id="dotLevel">1</span> &nbsp;|&nbsp; Score: <span id="dotScore">0</span>
+        </div>
+        <div class="game-instructions">Watch the pattern light up, then tap the same dots in order.</div>
+        <div class="dot-grid" id="dotGrid"></div>
+        <div class="dot-game-msg" id="dotMsg">Press Start to play</div>
+        <button onclick="startDotGame()"
+          style="margin-top:.75rem;background:var(--sage);color:#fff;border:none;padding:.6rem 1.4rem;border-radius:100px;cursor:pointer;font-weight:500;font-size:.88rem;">▶
+          Start / Reset</button>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════
+         4. NATURE SOUNDS
+    ═══════════════════════════════ -->
+    <div class="sounds-section">
+      <div class="section-label"><span>🎵</span> Soothing Sounds</div>
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:1.25rem">Click a sound to play. Mix multiple sounds
+        together.</p>
+
+      <div class="sounds-grid" id="soundsGrid">
+        <!-- cards generated by JS -->
+      </div>
+
+      <div class="volume-row">
+        <span class="volume-label">🔊 Volume</span>
+        <input type="range" id="volumeSlider" min="0" max="100" value="60" oninput="setVolume(this.value)" />
+        <span style="font-size:.85rem;color:var(--muted);min-width:2.5rem" id="volDisplay">60%</span>
+      </div>
+      <div class="timer-row">
+        <span class="timer-label">⏱ Auto-stop after:</span>
+        <button class="timer-btn" onclick="setSoundTimer(5,this)">5 min</button>
+        <button class="timer-btn" onclick="setSoundTimer(10,this)">10 min</button>
+        <button class="timer-btn" onclick="setSoundTimer(20,this)">20 min</button>
+        <button class="timer-btn" onclick="setSoundTimer(0,this)">Off</button>
+        <span class="timer-countdown" id="timerCountdown"></span>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════
+         5. BREATHING & ANXIETY RELIEF
+    ═══════════════════════════════ -->
+    <div class="breathing-section">
+      <div class="section-label"><span>🌬️</span> Anxiety Relief — Breathing Exercises</div>
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:1.25rem">Choose a technique. The animated card guides
+        you through each phase.</p>
+
+      <div class="breathing-tabs">
+        <button class="breath-tab active" onclick="selectBreath('box',this)">Hold Breathing</button>
+        <button class="breath-tab" onclick="selectBreath('calm',this)">🌊 Calm Breath</button>
+        <button class="breath-tab" onclick="selectBreath('power',this)">⚡ Power Reset</button>
+      </div>
+
+      <!-- THE CARD -->
+      <div class="breath-card" id="breathCard">
+        <div class="breath-phase" id="breathPhase">Ready to begin</div>
+        <div class="breath-instruction" id="breathInstruction">Choose a technique above, then press Start.<br />Follow
+          the circle — inhale as it expands, exhale as it shrinks.</div>
+
+        <div class="breath-circle-wrap">
+          <div class="breath-ring"></div>
+          <div class="breath-ring-progress" id="breathRingProgress"></div>
+          <div class="breath-circle" id="breathCircle">
+            <div class="breath-circle-inner">
+              <div class="breath-circle-num" id="breathNum">–</div>
+              <div class="breath-circle-label" id="breathCircleLabel">seconds</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="breath-timer-text" id="breathTimerText">Select a technique to start</div>
+        <button class="breath-start-btn" id="breathStartBtn" onclick="toggleBreathing()">▶ Start Breathing</button>
+        <div class="breath-cycle-count" id="breathCycleText"></div>
+      </div>
+
+      <!-- OTHER ACTIVITY CARDS -->
+      <div class="activity-cards">
+        <div class="activity-card" onclick="quickActivity('grounding')">
+          <div class="act-icon">🌱</div>
+          <div class="act-title">5-4-3-2-1 Grounding</div>
+          <div class="act-desc">Name 5 things you see, 4 you feel, 3 you hear, 2 you smell, 1 you taste.</div>
+          <div class="act-duration">⏱ 2 min</div>
+        </div>
+        <div class="activity-card" onclick="quickActivity('journalPrompt')">
+          <div class="act-icon">📝</div>
+          <div class="act-title">Thought Dump</div>
+          <div class="act-desc">Write whatever is on your mind without editing. Let it all out.</div>
+          <div class="act-duration">⏱ 3 min</div>
+        </div>
+        <div class="activity-card" onclick="quickActivity('affirmation')">
+          <div class="act-icon">💛</div>
+          <div class="act-title">Daily Affirmation</div>
+          <div class="act-desc">A personalised positive statement for your current mood level.</div>
+          <div class="act-duration">⏱ 1 min</div>
+        </div>
+        <div class="activity-card" onclick="quickActivity('stretch')">
+          <div class="act-icon">🧘</div>
+          <div class="act-title">Stretch</div>
+          <div class="act-desc">Simple neck, shoulder and wrist stretches you can do right now.</div>
+          <div class="act-duration">⏱ 2 min</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end .page-wrap -->
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <!-- ACTIVITY MODAL -->
+  <div id="activityModal"
+    style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:300;display:none;align-items:center;justify-content:center;">
+    <div
+      style="background:#fff;border-radius:var(--radius);padding:2.5rem;max-width:480px;width:90%;position:relative;max-height:90vh;overflow-y:auto;">
+      <button onclick="closeActivity()"
+        style="position:absolute;top:1rem;right:1rem;background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--muted);">✕</button>
+      <div id="activityContent"></div>
+    </div>
+  </div>
+
+  <script>
+    /* ═══════════════════════════════════════════════
+       STORAGE HELPERS
+    ═══════════════════════════════════════════════ */
+    function loadData(key, fallback) {
+      try { return JSON.parse(localStorage.getItem('mm_' + key)) ?? fallback; }
+      catch { return fallback; }
+    }
+    function saveData(key, val) {
+      localStorage.setItem('mm_' + key, JSON.stringify(val));
+    }
+
+    /* ═══════════════════════════════════════════════
+       1. MOOD TRACKER
+    ═══════════════════════════════════════════════ */
+    const moodColors = ['', '#ef4444', '#f97316', '#f59e0b', '#eab308', '#84cc16', '#22c55e', '#10b981', '#06b6d4', '#3b82f6', '#7c3aed'];
+
+    let selectedMood = 0;
+
+    function buildMoodScale() {
+      const scale = document.getElementById('moodScale');
+      for (let i = 1; i <= 10; i++) {
+        const btn = document.createElement('button');
+        btn.className = 'mood-num'; btn.textContent = i;
+        btn.dataset.v = i;
+        btn.style.setProperty('--c', moodColors[i]);
+        btn.onclick = () => {
+          document.querySelectorAll('.mood-num').forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected'); selectedMood = i;
+        };
+        scale.appendChild(btn);
+      }
+    }
+
+    document.getElementById('saveMoodBtn').onclick = function () {
+      if (!selectedMood) { showToast('Please select a mood score first!'); return; }
+      const logs = loadData('moodLogs', []);
+      const today = new Date().toISOString().slice(0, 10);
+      const note = document.getElementById('moodNote').value.trim();
+      // remove existing today entry
+      const filtered = logs.filter(l => l.date !== today);
+      filtered.push({ date: today, score: selectedMood, note });
+      filtered.sort((a, b) => a.date.localeCompare(b.date));
+      saveData('moodLogs', filtered);
+      showToast('✅ Check-in saved for today!');
+      renderMoodChart(); renderProgress(); renderSessionLog();
+      document.getElementById('moodNote').value = '';
+      // increment breathing sessions if any
+    };
+
+    function renderMoodChart() {
+      const chart = document.getElementById('moodChart');
+      chart.innerHTML = '';
+      const logs = loadData('moodLogs', []);
+      // last 14 days
+      const days = [];
+      for (let i = 13; i >= 0; i--) {
+        const d = new Date(); d.setDate(d.getDate() - i);
+        days.push(d.toISOString().slice(0, 10));
+      }
+      days.forEach(d => {
+        const entry = logs.find(l => l.date === d);
+        const wrap = document.createElement('div'); wrap.className = 'mood-bar-wrap';
+        const bar = document.createElement('div'); bar.className = 'mood-bar';
+        const pct = entry ? (entry.score / 10) * 100 : 0;
+        bar.style.height = pct + '%';
+        bar.style.background = entry ? moodColors[entry.score] : 'var(--paper2)';
+        bar.title = entry ? `${d}: ${entry.score}/10` : d;
+        const label = document.createElement('div'); label.className = 'mood-bar-date';
+        label.textContent = d.slice(8); // day number
+        wrap.appendChild(bar); wrap.appendChild(label);
+        chart.appendChild(wrap);
+      });
+    }
+
+    /* ═══════════════════════════════════════════════
+       2. PROGRESS
+    ═══════════════════════════════════════════════ */
+    function renderProgress() {
+      const logs = loadData('moodLogs', []);
+      const breathCount = loadData('breathCount', 0);
+
+      // streak
+      let streak = 0;
+      const today = new Date().toISOString().slice(0, 10);
+      let check = new Date();
+      while (true) {
+        const d = check.toISOString().slice(0, 10);
+        if (logs.find(l => l.date === d)) { streak++; check.setDate(check.getDate() - 1); }
+        else break;
+      }
+      document.getElementById('streakNum').textContent = streak;
+      document.getElementById('totalCheckins').textContent = logs.length;
+      document.getElementById('breathSessions').textContent = breathCount;
+
+      // avg 7d
+      const recent = logs.filter(l => {
+        const d7 = new Date(); d7.setDate(d7.getDate() - 7);
+        return new Date(l.date) >= d7;
+      });
+      if (recent.length) {
+        const avg = (recent.reduce((s, l) => s + l.score, 0) / recent.length).toFixed(1);
+        document.getElementById('avgMood').textContent = avg;
+        document.getElementById('avgMoodBar').style.width = (avg / 10 * 100) + '%';
+      }
+
+      // calendar
+      const cal = document.getElementById('streakCalendar');
+      cal.innerHTML = '';
+      const days = [];
+      for (let i = 13; i >= 0; i--) {
+        const d = new Date(); d.setDate(d.getDate() - i);
+        days.push(d.toISOString().slice(0, 10));
+      }
+      days.forEach(d => {
+        const div = document.createElement('div'); div.className = 'streak-day';
+        const shortDay = new Date(d).toLocaleDateString('en', { weekday: 'narrow' });
+        div.textContent = shortDay;
+        const isToday = d === today;
+        const hasCi = logs.find(l => l.date === d);
+        div.classList.add(isToday && hasCi ? 'today' : hasCi ? 'done' : isToday ? 'today' : 'empty');
+        div.title = d;
+        cal.appendChild(div);
+      });
+    }
+
+    function renderSessionLog() {
+      const logs = loadData('moodLogs', []);
+      const log = document.getElementById('sessionLog');
+      if (!logs.length) {
+        log.innerHTML = '<div style="font-size:.85rem;color:var(--muted);padding:.5rem 0">No check-ins saved yet. Start by rating your mood above!</div>';
+        return;
+      }
+      log.innerHTML = '';
+      [...logs].reverse().slice(0, 6).forEach(l => {
+        const item = document.createElement('div'); item.className = 'session-log-item';
+        const dot = document.createElement('div'); dot.className = 'session-log-dot';
+        dot.style.background = moodColors[l.score];
+        const badge = document.createElement('span'); badge.className = 'session-log-mood-badge';
+        badge.style.background = moodColors[l.score] + '22';
+        badge.style.color = moodColors[l.score];
+        badge.textContent = l.score + '/10';
+        const text = document.createElement('span');
+        text.textContent = l.note || 'No note';
+        text.style.cssText = 'flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--slate)';
+        const date = document.createElement('span'); date.className = 'date';
+        date.textContent = new Date(l.date).toLocaleDateString('en', { month: 'short', day: 'numeric' });
+        item.appendChild(dot); item.appendChild(badge); item.appendChild(text); item.appendChild(date);
+        log.appendChild(item);
+      });
+    }
+
+    /* ═══════════════════════════════════════════════
+       3. GAMES
+    ═══════════════════════════════════════════════ */
+    function selectGame(name, el) {
+      document.querySelectorAll('.game-card').forEach(c => c.classList.remove('active'));
+      document.querySelectorAll('.game-area').forEach(a => { a.classList.remove('visible'); a.style.display = 'none'; });
+      el.classList.add('active');
+      const area = document.getElementById('game-' + name);
+      area.style.display = 'block'; area.classList.add('visible');
+    }
+
+    // ── BUBBLE POP ──
+    let bubbleScore = 0, bubbleInterval = null;
+    const bubbleEmojis = ['🌸', '🌺', '🌻', '🌈', '⭐', '💫', '🦋', '🌊', '🍀', '🌙'];
+    function startBubbleGame() {
+      clearInterval(bubbleInterval);
+      bubbleScore = 0; document.getElementById('bubbleScore').textContent = 0;
+      const arena = document.getElementById('bubble-game');
+      arena.innerHTML = '';
+      bubbleInterval = setInterval(spawnBubble, 900);
+      spawnBubble();
+    }
+    function spawnBubble() {
+      const arena = document.getElementById('bubble-game');
+      const size = 50 + Math.random() * 50;
+      const b = document.createElement('div'); b.className = 'bubble';
+      b.textContent = bubbleEmojis[Math.floor(Math.random() * bubbleEmojis.length)];
+      b.style.cssText = `width:${size}px;height:${size}px;left:${Math.random() * (arena.offsetWidth - size)}px;bottom:0;background:hsl(${Math.random() * 360},60%,80%);animation-duration:${4 + Math.random() * 3}s`;
+      b.onclick = (e) => {
+        e.stopPropagation();
+        bubbleScore += 10; document.getElementById('bubbleScore').textContent = bubbleScore;
+        b.style.transform = 'scale(0)'; b.style.transition = 'transform .2s';
+        setTimeout(() => b.remove(), 200);
+        showToast('+10 ✨', 800);
+      };
+      arena.appendChild(b);
+      setTimeout(() => { if (b.parentNode) b.remove(); }, 7000);
+    }
+
+    // ── COLOR FOCUS ──
+    const colorDefs = [
+      { word: 'RED', hex: '#ef4444' }, { word: 'BLUE', hex: '#3b82f6' }, { word: 'GREEN', hex: '#22c55e' },
+      { word: 'ORANGE', hex: '#f97316' }, { word: 'PURPLE', hex: '#7c3aed' }, { word: 'YELLOW', hex: '#eab308' }
+    ];
+    let colorScore = 0, currentInkColor = null;
+    function startColorGame() {
+      colorScore = 0; document.getElementById('colorScore').textContent = 0;
+      nextColorRound();
+    }
+    function nextColorRound() {
+      const wordObj = colorDefs[Math.floor(Math.random() * colorDefs.length)];
+      // pick different ink color
+      let inkObj;
+      do { inkObj = colorDefs[Math.floor(Math.random() * colorDefs.length)]; }
+      while (inkObj.word === wordObj.word && Math.random() > 0.3);
+      currentInkColor = inkObj.hex;
+      document.getElementById('colorWord').textContent = wordObj.word;
+      document.getElementById('colorWord').style.color = inkObj.hex;
+      document.getElementById('colorFeedback').textContent = '';
+      // options: correct + 3 wrong
+      const opts = document.getElementById('colorOptions'); opts.innerHTML = '';
+      const choices = [inkObj];
+      while (choices.length < 4) {
+        const c = colorDefs[Math.floor(Math.random() * colorDefs.length)];
+        if (!choices.find(x => x.hex === c.hex)) choices.push(c);
+      }
+      choices.sort(() => Math.random() - .5);
+      choices.forEach(c => {
+        const btn = document.createElement('button'); btn.className = 'color-opt';
+        btn.textContent = c.word; btn.style.background = c.hex; btn.style.color = '#fff';
+        btn.onclick = () => {
+          if (c.hex === currentInkColor) {
+            colorScore += 10; document.getElementById('colorScore').textContent = colorScore;
+            document.getElementById('colorFeedback').textContent = '✅ Correct!';
+            document.getElementById('colorFeedback').style.color = 'var(--green)';
+          } else {
+            document.getElementById('colorFeedback').textContent = '❌ Try again!';
+            document.getElementById('colorFeedback').style.color = 'var(--red)';
+          }
+          setTimeout(nextColorRound, 700);
+        };
+        opts.appendChild(btn);
+      });
+    }
+
+    // ── MEMORY DOTS ──
+    let dotLevel = 1, dotScore = 0, dotPattern = [], dotUserInput = [], dotPlaying = false;
+    function buildDotGrid() {
+      const grid = document.getElementById('dotGrid');
+      grid.innerHTML = '';
+      for (let i = 0; i < 25; i++) {
+        const cell = document.createElement('div'); cell.className = 'dot-cell';
+        cell.dataset.idx = i;
+        cell.onclick = () => dotCellClick(i);
+        grid.appendChild(cell);
+      }
+    }
+    function startDotGame() {
+      dotLevel = 1; dotScore = 0;
+      document.getElementById('dotLevel').textContent = 1;
+      document.getElementById('dotScore').textContent = 0;
+      buildDotGrid(); nextDotRound();
+    }
+    function nextDotRound() {
+      dotPattern = [];
+      const count = dotLevel + 2;
+      const used = new Set();
+      while (dotPattern.length < count) {
+        const n = Math.floor(Math.random() * 25);
+        if (!used.has(n)) { used.add(n); dotPattern.push(n); }
+      }
+      dotUserInput = []; dotPlaying = true;
+      document.getElementById('dotMsg').textContent = 'Watch the pattern...';
+      document.querySelectorAll('.dot-cell').forEach(c => c.style.pointerEvents = 'none');
+      let idx = 0;
+      const show = setInterval(() => {
+        if (idx > 0) lightDot(dotPattern[idx - 1], false);
+        if (idx < dotPattern.length) { lightDot(dotPattern[idx], true); idx++; }
+        else {
+          clearInterval(show);
+          lightDot(dotPattern[dotPattern.length - 1], false);
+          document.getElementById('dotMsg').textContent = 'Now tap them in order!';
+          document.querySelectorAll('.dot-cell').forEach(c => c.style.pointerEvents = 'auto');
+        }
+      }, 700);
+    }
+    function lightDot(idx, on) {
+      const cells = document.querySelectorAll('.dot-cell');
+      if (on) cells[idx].classList.add('lit'); else cells[idx].classList.remove('lit');
+    }
+    function dotCellClick(idx) {
+      if (!dotPlaying) return;
+      const expected = dotPattern[dotUserInput.length];
+      lightDot(idx, true);
+      if (idx === expected) {
+        dotUserInput.push(idx);
+        if (dotUserInput.length === dotPattern.length) {
+          dotScore += dotLevel * 5;
+          document.getElementById('dotScore').textContent = dotScore;
+          dotLevel++; document.getElementById('dotLevel').textContent = dotLevel;
+          document.getElementById('dotMsg').textContent = '✅ Correct! Next level...';
+          setTimeout(() => { document.querySelectorAll('.dot-cell').forEach(c => { c.classList.remove('lit'); c.classList.remove('wrong'); }); nextDotRound(); }, 800);
+        }
+      } else {
+        document.querySelectorAll('.dot-cell')[idx].classList.add('wrong');
+        document.getElementById('dotMsg').textContent = '❌ Wrong! Watch the new pattern.';
+        dotPlaying = false;
+        setTimeout(() => { document.querySelectorAll('.dot-cell').forEach(c => { c.classList.remove('lit'); c.classList.remove('wrong'); }); nextDotRound(); }, 1000);
+      }
+    }
+
+    /* ═══════════════════════════════════════════════
+       4. NATURE SOUNDS  (Web Audio API — no files needed)
+    ═══════════════════════════════════════════════ */
+    const soundDefs = [
+      { id: 'rain', name: 'Rain', icon: '🌧️', bg: '#dbeafe', desc: 'Soft rainfall', gen: 'rain' },
+      { id: 'ocean', name: 'Ocean Waves', icon: '🌊', bg: '#cffafe', desc: 'Rolling waves', gen: 'ocean' },
+      { id: 'fire', name: 'Campfire', icon: '🔥', bg: '#fee2e2', desc: 'Crackling fire', gen: 'fire' },
+      { id: 'wind', name: 'Gentle Wind', icon: '🍃', bg: '#f0fdf4', desc: 'Soft breeze', gen: 'wind' },
+    ];
+
+    let audioCtx = null;
+    const activeSounds = {};
+    let masterVolume = 0.6;
+    let soundTimerInterval = null, soundTimerEnd = null;
+
+    function getAudioCtx() {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      return audioCtx;
+    }
+
+    function buildSoundsGrid() {
+      const grid = document.getElementById('soundsGrid');
+      soundDefs.forEach(s => {
+        const card = document.createElement('div');
+        card.className = 'sound-card'; card.id = 'scard-' + s.id;
+        card.style.setProperty('--card-bg', s.bg + '80');
+        card.onclick = () => toggleSound(s.id);
+        card.innerHTML = `
+      <span class="sound-icon">${s.icon}</span>
+      <div class="sound-name">${s.name}</div>
+      <div class="sound-playing-badge">▶ Playing</div>
+      <div class="sound-waves">
+        <div class="sound-wave-bar"></div><div class="sound-wave-bar"></div>
+        <div class="sound-wave-bar"></div><div class="sound-wave-bar"></div>
+        <div class="sound-wave-bar"></div>
+      </div>`;
+        grid.appendChild(card);
+      });
+    }
+
+    function toggleSound(id) {
+      if (activeSounds[id]) { stopSound(id); }
+      else { playSound(id); }
+    }
+
+    function playSound(id) {
+      const ctx = getAudioCtx();
+      if (ctx.state === 'suspended') ctx.resume();
+      const def = soundDefs.find(s => s.id === id);
+      const nodes = generateSound(ctx, def.gen);
+      const gainNode = ctx.createGain();
+      gainNode.gain.value = masterVolume;
+      nodes.connect(gainNode);
+      gainNode.connect(ctx.destination);
+      activeSounds[id] = { nodes, gainNode };
+      document.getElementById('scard-' + id).classList.add('playing');
+    }
+
+    function stopSound(id) {
+      if (!activeSounds[id]) return;
+      try { activeSounds[id].nodes.disconnect(); activeSounds[id].gainNode.disconnect(); } catch { }
+      delete activeSounds[id];
+      document.getElementById('scard-' + id).classList.remove('playing');
+    }
+
+    function generateSound(ctx, type) {
+      // Build a ScriptProcessorNode (wide compat) that generates the waveform
+      const bufSize = 4096;
+      const processor = ctx.createScriptProcessor(bufSize, 0, 2);
+      let phase = 0, phase2 = 0;
+
+      if (type === 'rain') {
+        processor.onaudioprocess = (e) => {
+          const L = e.outputBuffer.getChannelData(0);
+          const R = e.outputBuffer.getChannelData(1);
+          for (let i = 0; i < bufSize; i++) {
+            const n = (Math.random() * 2 - 1) * 0.25;
+            const drip = Math.random() < 0.001 ? Math.sin(phase) * 0.3 : 0; phase += 0.4;
+            L[i] = n + drip; R[i] = n + (Math.random() < 0.001 ? Math.sin(phase2) * 0.3 : 0); phase2 += 0.41;
+          }
+        };
+      } else if (type === 'ocean') {
+        let t = 0;
+        processor.onaudioprocess = (e) => {
+          const L = e.outputBuffer.getChannelData(0);
+          const R = e.outputBuffer.getChannelData(1);
+          for (let i = 0; i < bufSize; i++) {
+            t++;
+            const wave = Math.sin(t / ctx.sampleRate * 0.3) * Math.sin(t / ctx.sampleRate * 0.07);
+            const noise = (Math.random() * 2 - 1) * 0.15;
+            L[i] = wave * 0.4 + noise; R[i] = wave * 0.4 + (Math.random() * 2 - 1) * 0.15;
+          }
+        };
+      } else if (type === 'birds') {
+        let t = 0;
+        processor.onaudioprocess = (e) => {
+          const L = e.outputBuffer.getChannelData(0);
+          const R = e.outputBuffer.getChannelData(1);
+          for (let i = 0; i < bufSize; i++) {
+            t++;
+            const wind = (Math.random() * 2 - 1) * 0.04;
+            const chirp = Math.random() < 0.0008 ? Math.sin(t * 0.2 + (Math.random() * 0.5)) * 0.35 : 0;
+            L[i] = wind + chirp; R[i] = wind + (Math.random() < 0.0008 ? Math.sin(t * 0.21) * 0.35 : 0);
+          }
+        };
+      } else if (type === 'fire') {
+        processor.onaudioprocess = (e) => {
+          const L = e.outputBuffer.getChannelData(0);
+          const R = e.outputBuffer.getChannelData(1);
+          for (let i = 0; i < bufSize; i++) {
+            const crackle = Math.random() < 0.003 ? (Math.random() * 2 - 1) * 0.6 : 0;
+            const base = (Math.random() * 2 - 1) * 0.08;
+            L[i] = base + crackle; R[i] = base + (Math.random() < 0.003 ? (Math.random() * 2 - 1) * 0.6 : 0);
+          }
+        };
+      } else if (type === 'wind') {
+        let t = 0;
+        processor.onaudioprocess = (e) => {
+          const L = e.outputBuffer.getChannelData(0);
+          const R = e.outputBuffer.getChannelData(1);
+          for (let i = 0; i < bufSize; i++) {
+            t++;
+            const swell = (Math.sin(t / ctx.sampleRate * 0.15) + 1.2) * 0.5;
+            const n = (Math.random() * 2 - 1) * 0.2 * swell;
+            L[i] = n; R[i] = (Math.random() * 2 - 1) * 0.2 * swell;
+          }
+        };
+      } else { // thunder
+        let t = 0;
+        processor.onaudioprocess = (e) => {
+          const L = e.outputBuffer.getChannelData(0);
+          const R = e.outputBuffer.getChannelData(1);
+          for (let i = 0; i < bufSize; i++) {
+            t++;
+            const rain = (Math.random() * 2 - 1) * 0.15;
+            const rumble = Math.sin(t / ctx.sampleRate * 40 + Math.sin(t / ctx.sampleRate * 0.3) * 3) * 0.08;
+            const thunder = Math.random() < 0.00008 ? (Math.random() * 2 - 1) * 0.7 : 0;
+            L[i] = rain + rumble + thunder; R[i] = rain + rumble + thunder;
+          }
+        };
+      }
+      return processor;
+    }
+
+    function setVolume(v) {
+      masterVolume = v / 100;
+      document.getElementById('volDisplay').textContent = v + '%';
+      Object.values(activeSounds).forEach(s => {
+        if (s.gainNode) s.gainNode.gain.value = masterVolume;
+      });
+    }
+
+    function setSoundTimer(mins, btn) {
+      document.querySelectorAll('.timer-btn').forEach(b => b.classList.remove('active'));
+      clearInterval(soundTimerInterval);
+      document.getElementById('timerCountdown').textContent = '';
+      if (!mins) { btn.classList.add('active'); return; }
+      btn.classList.add('active');
+      soundTimerEnd = Date.now() + mins * 60 * 1000;
+      soundTimerInterval = setInterval(() => {
+        const remaining = soundTimerEnd - Date.now();
+        if (remaining <= 0) {
+          clearInterval(soundTimerInterval);
+          Object.keys(activeSounds).forEach(id => stopSound(id));
+          document.getElementById('timerCountdown').textContent = '';
+          document.querySelectorAll('.timer-btn').forEach(b => b.classList.remove('active'));
+          showToast('⏱ Sound timer ended');
+        } else {
+          const m = Math.floor(remaining / 60000);
+          const s = Math.floor((remaining % 60000) / 1000);
+          document.getElementById('timerCountdown').textContent = `${m}:${s.toString().padStart(2, '0')}`;
+        }
+      }, 1000);
+    }
+
+    /* ═══════════════════════════════════════════════
+       5. BREATHING
+    ═══════════════════════════════════════════════ */
+    const breathTechniques = {
+      box: { name: 'Box Breathing', phases: [{ n: 'Inhale', d: 4 }, { n: 'Hold', d: 4 }, { n: 'Exhale', d: 4 }, { n: 'Hold', d: 4 }], instruction: 'Inhale 4s → Hold 4s → Exhale 4s → Hold 4s. Repeat.', expand: [0], hold: [1, 3], shrink: [2] },
+      '478': { name: '4-7-8 Technique', phases: [{ n: 'Inhale', d: 4 }, { n: 'Hold', d: 7 }, { n: 'Exhale', d: 8 }], instruction: 'Inhale 4s → Hold 7s → Exhale 8s. Deeply calming.', expand: [0], hold: [1], shrink: [2] },
+      calm: { name: 'Calm Breath', phases: [{ n: 'Inhale', d: 5 }, { n: 'Exhale', d: 5 }], instruction: 'Inhale 5s → Exhale 5s. Simple and soothing.', expand: [0], hold: [], shrink: [1] },
+      power: { name: 'Power Reset', phases: [{ n: 'Inhale', d: 2 }, { n: 'Hold', d: 1 }, { n: 'Exhale', d: 4 }, { n: 'Pause', d: 1 }], instruction: 'Quick inhale → Short hold → Long exhale → Pause. Resets your nervous system.', expand: [0], hold: [1], shrink: [2] },
+    };
+
+    let currentTechnique = breathTechniques.box;
+    let breathRunning = false, breathPhaseIdx = 0, breathCounter = 0, breathCycles = 0;
+    let breathInterval = null;
+
+    function selectBreath(key, el) {
+      if (breathRunning) stopBreathing();
+      document.querySelectorAll('.breath-tab').forEach(b => b.classList.remove('active'));
+      el.classList.add('active');
+      currentTechnique = breathTechniques[key];
+      document.getElementById('breathInstruction').textContent = currentTechnique.instruction;
+      document.getElementById('breathPhase').textContent = 'Ready to begin';
+      document.getElementById('breathNum').textContent = '–';
+      document.getElementById('breathTimerText').textContent = 'Press Start to begin';
+      document.getElementById('breathCycleText').textContent = '';
+      document.getElementById('breathCircle').className = 'breath-circle';
+    }
+
+    function toggleBreathing() {
+      if (breathRunning) stopBreathing();
+      else startBreathing();
+    }
+
+    function startBreathing() {
+      breathRunning = true; breathPhaseIdx = 0; breathCounter = 0; breathCycles = 0;
+      document.getElementById('breathStartBtn').textContent = '⏹ Stop';
+      document.getElementById('breathStartBtn').classList.add('stop');
+      runBreathPhase();
+    }
+
+    function stopBreathing() {
+      breathRunning = false; clearTimeout(breathInterval);
+      document.getElementById('breathStartBtn').textContent = '▶ Start Breathing';
+      document.getElementById('breathStartBtn').classList.remove('stop');
+      document.getElementById('breathPhase').textContent = 'Paused';
+      document.getElementById('breathCircle').className = 'breath-circle';
+      document.getElementById('breathCircleLabel').textContent = 'seconds';
+      // save to storage
+      const prev = loadData('breathCount', 0);
+      if (breathCycles > 0) { saveData('breathCount', prev + 1); renderProgress(); }
+    }
+
+    function runBreathPhase() {
+      if (!breathRunning) return;
+      const tech = currentTechnique;
+      const phase = tech.phases[breathPhaseIdx];
+      breathCounter = phase.d;
+
+      document.getElementById('breathPhase').textContent = phase.n;
+      document.getElementById('breathCircleLabel').textContent = phase.n.toLowerCase();
+
+      // circle animation class
+      const circle = document.getElementById('breathCircle');
+      circle.className = 'breath-circle';
+      if (tech.expand.includes(breathPhaseIdx)) setTimeout(() => circle.classList.add('expand'), 50);
+      else if (tech.hold.includes(breathPhaseIdx)) setTimeout(() => circle.classList.add('hold'), 50);
+      else setTimeout(() => circle.classList.add('shrink'), 50);
+
+      tickBreath();
+    }
+
+    function tickBreath() {
+      if (!breathRunning) return;
+      document.getElementById('breathNum').textContent = breathCounter;
+      // ring progress
+      const tech = currentTechnique;
+      const totalD = tech.phases[breathPhaseIdx].d;
+      const progress = ((totalD - breathCounter) / totalD) * 360;
+      document.getElementById('breathRingProgress').style.background =
+        `conic-gradient(var(--sage) ${progress}deg, transparent ${progress}deg)`;
+      document.getElementById('breathTimerText').textContent =
+        `Cycle ${breathCycles + 1} · Phase ${breathPhaseIdx + 1}/${tech.phases.length}`;
+
+      if (breathCounter > 0) {
+        breathCounter--;
+        breathInterval = setTimeout(tickBreath, 1000);
+      } else {
+        breathPhaseIdx++;
+        if (breathPhaseIdx >= tech.phases.length) {
+          breathPhaseIdx = 0; breathCycles++;
+          document.getElementById('breathCycleText').textContent = `✅ ${breathCycles} cycle${breathCycles > 1 ? 's' : ''} completed`;
+        }
+        runBreathPhase();
+      }
+    }
+
+    /* ═══════════════════════════════════════════════
+       ACTIVITY MODAL
+    ═══════════════════════════════════════════════ */
+    const activities = {
+      grounding: {
+        title: '5-4-3-2-1 Grounding',
+        icon: '🌱',
+        html: `
+      <h2 style="font-family:'Fraunces',serif;font-size:1.6rem;margin-bottom:.5rem">🌱 5-4-3-2-1 Grounding</h2>
+      <p style="color:var(--slate);margin-bottom:1.5rem;font-size:.9rem">Take a slow breath and go through each sense. This pulls you back to the present moment.</p>
+      <div style="display:flex;flex-direction:column;gap:.75rem">
+        ${['👀 Name 5 things you can <strong>see</strong>', '🤚 Name 4 things you can <strong>feel or touch</strong>', '👂 Name 3 things you can <strong>hear</strong>', '👃 Name 2 things you can <strong>smell</strong>', '👅 Name 1 thing you can <strong>taste</strong>'].map((t, i) => `
+        <div style="padding:1rem;background:var(--paper);border:1px solid var(--paper2);border-radius:12px">
+          <div style="font-size:.9rem;margin-bottom:.4rem">${t}</div>
+          <input type="text" placeholder="Write here..." style="width:100%;border:1px solid var(--paper2);border-radius:8px;padding:.5rem .75rem;font-family:'DM Sans',sans-serif;font-size:.88rem;outline:none;background:white;color:var(--ink)" />
+        </div>`).join('')}
+      </div>
+      <button onclick="closeActivity();showToast('🌱 Grounding complete!')" style="margin-top:1.5rem;background:var(--sage);color:#fff;border:none;padding:.75rem 2rem;border-radius:100px;cursor:pointer;font-size:.95rem;font-weight:500">✅ Done</button>`
+      },
+      journalPrompt: {
+        title: 'Thought Dump',
+        html: `
+      <h2 style="font-family:'Fraunces',serif;font-size:1.6rem;margin-bottom:.5rem">📝 Thought Dump</h2>
+      <p style="color:var(--slate);margin-bottom:1rem;font-size:.9rem">No editing, no judgment. Just write whatever is in your head for 3 minutes.</p>
+      <div id="dumpTimer" style="font-family:'Fraunces',serif;font-size:1.5rem;color:var(--sage);margin-bottom:.75rem;text-align:center">3:00</div>
+      <textarea id="dumpText" rows="8" placeholder="Start typing..." style="width:100%;border:1.5px solid var(--paper2);border-radius:12px;padding:.75rem 1rem;font-family:'DM Sans',sans-serif;font-size:.9rem;resize:none;outline:none;color:var(--ink)"></textarea>
+      <button onclick="startDump()" style="margin-top:.75rem;background:var(--sage);color:#fff;border:none;padding:.65rem 1.5rem;border-radius:100px;cursor:pointer;font-size:.9rem;font-weight:500">▶ Start Timer</button>
+      <button onclick="closeActivity()" style="margin-top:.75rem;margin-left:.5rem;background:none;border:1.5px solid var(--paper2);color:var(--slate);padding:.65rem 1.5rem;border-radius:100px;cursor:pointer;font-size:.9rem">Close</button>`
+      },
+      affirmation: {
+        title: 'Daily Affirmation',
+        html: `
+      <h2 style="font-family:'Fraunces',serif;font-size:1.6rem;margin-bottom:.5rem">💛 Your Affirmation</h2>
+      <p style="color:var(--slate);margin-bottom:1.5rem;font-size:.9rem">Read this slowly. Breathe deeply. Let it land.</p>
+      <div id="affirmCard" style="background:linear-gradient(135deg,var(--amber-pale),#fff8ed);border-radius:16px;padding:2rem;text-align:center;border:1px solid var(--amber-pale)">
+        <div style="font-size:2.5rem;margin-bottom:1rem">💛</div>
+        <div id="affirmText" style="font-family:'Fraunces',serif;font-size:1.3rem;color:var(--ink);line-height:1.6;font-weight:600"></div>
+      </div>
+      <button onclick="newAffirmation()" style="margin-top:1.25rem;background:var(--amber);color:#fff;border:none;padding:.65rem 1.5rem;border-radius:100px;cursor:pointer;font-size:.9rem;font-weight:500">🔄 New Affirmation</button>
+      <button onclick="closeActivity()" style="margin-top:.75rem;margin-left:.5rem;background:none;border:1.5px solid var(--paper2);color:var(--slate);padding:.65rem 1.5rem;border-radius:100px;cursor:pointer;font-size:.9rem">Close</button>`
+      },
+      stretch: {
+        title: 'Desk Stretch',
+        html: `
+      <h2 style="font-family:'Fraunces',serif;font-size:1.6rem;margin-bottom:.5rem">🧘 Quick Desk Stretch</h2>
+      <p style="color:var(--slate);margin-bottom:1.25rem;font-size:.9rem">Hold each stretch for 15–30 seconds. Breathe steadily throughout.</p>
+      <div style="display:flex;flex-direction:column;gap:.65rem">
+        ${[
+            ['Neck Rolls', 'Slowly roll your head in a circle, 3 times each direction.', '🔄'],
+            ['Shoulder Shrug', 'Raise shoulders to ears, hold 5s, release. Repeat 5 times.', '💆'],
+            ['Chest Opener', 'Clasp hands behind back, gently push chest forward.', '🙌'],
+            ['Wrist Circles', 'Extend arms, rotate wrists 10 times each direction.', '✋'],
+            ['Seated Spinal Twist', 'Sit tall, twist right, hold 20s. Then left.', '🌀'],
+          ].map(([t, d, e]) => `<div style="display:flex;gap:.75rem;padding:.85rem 1rem;background:var(--paper);border:1px solid var(--paper2);border-radius:12px;align-items:flex-start">
+          <span style="font-size:1.5rem">${e}</span>
+          <div><strong style="font-size:.9rem">${t}</strong><br/><span style="font-size:.82rem;color:var(--slate)">${d}</span></div>
+        </div>`).join('')}
+      </div>
+      <button onclick="closeActivity();showToast('🧘 Great stretch session!')" style="margin-top:1.25rem;background:var(--sage);color:#fff;border:none;padding:.75rem 2rem;border-radius:100px;cursor:pointer;font-size:.95rem;font-weight:500">✅ Done</button>`
+      }
+    };
+
+    const affirmations = [
+      'I am allowed to take things one step at a time.',
+      'My feelings are valid, and I have the strength to work through them.',
+      'I am doing the best I can, and that is enough.',
+      'This moment is temporary. I have overcome hard things before.',
+      'I deserve rest, peace, and kindness — especially from myself.',
+      'I am not my anxiety. I am stronger than I think.',
+      'Every breath I take is a chance to begin again.',
+      'I choose to be gentle with myself today.',
+    ];
+    function newAffirmation() {
+      document.getElementById('affirmText').textContent = affirmations[Math.floor(Math.random() * affirmations.length)];
+    }
+
+    let dumpTimerInterval = null;
+    function startDump() {
+      let secs = 180;
+      clearInterval(dumpTimerInterval);
+      dumpTimerInterval = setInterval(() => {
+        secs--;
+        const m = Math.floor(secs / 60), s = secs % 60;
+        const el = document.getElementById('dumpTimer');
+        if (el) el.textContent = `${m}:${s.toString().padStart(2, '0')}`;
+        if (secs <= 0) { clearInterval(dumpTimerInterval); if (el) el.textContent = '✅ Done!'; }
+      }, 1000);
+    }
+
+    function quickActivity(key) {
+      const modal = document.getElementById('activityModal');
+      document.getElementById('activityContent').innerHTML = activities[key].html;
+      modal.style.display = 'flex';
+      if (key === 'affirmation') newAffirmation();
+    }
+    function closeActivity() {
+      document.getElementById('activityModal').style.display = 'none';
+      clearInterval(dumpTimerInterval);
+    }
+    document.getElementById('activityModal').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('activityModal')) closeActivity();
+    });
+
+    /* ═══════════════════════════════════════════════
+       TOAST
+    ═══════════════════════════════════════════════ */
+    let toastTimeout;
+    function showToast(msg, dur = 2500) {
+      const t = document.getElementById('toast'); t.textContent = msg;
+      t.classList.add('show'); clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => t.classList.remove('show'), dur);
+    }
+
+    /* ═══════════════════════════════════════════════
+       INIT
+    ═══════════════════════════════════════════════ */
+    window.onload = function () {
+      buildMoodScale();
+      buildSoundsGrid();
+      renderMoodChart();
+      renderProgress();
+      renderSessionLog();
+      buildDotGrid();
+      // auto start bubble game arena
+      startBubbleGame();
+    };
+  </script>
+</body>
+
+</html>
