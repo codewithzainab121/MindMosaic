@@ -16,7 +16,7 @@ SESSIONS_FILE = os.path.join(BASE_DIR, "sessions.json")
 # ====================== FRONTEND ROUTES ======================
 @app.route('/')
 def serve_frontend():
-    return send_from_directory(FRONTEND_FOLDER, 'index.html')
+    return "MindMosaic backend is running 🚀"
 
 @app.route('/style.css')
 def serve_css():
@@ -114,14 +114,18 @@ def list_sessions():
     result.sort(key=lambda x: x["created_at"], reverse=True)
     return jsonify(result)
 
+@app.route("/health")
+def health():
+    return jsonify({"status": "ok"})
+
 # ====================== RAILWAY FIX (IMPORTANT) ======================
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))  # Railway gives PORT dynamically
+    import os
 
-    print(f"🧠 Mindmosaic backend running on 0.0.0.0:{port}")
+    port = int(os.environ.get("PORT", 8080))
 
     app.run(
-        host="0.0.0.0",   # CRITICAL for Railway
+        host="0.0.0.0",
         port=port,
-        debug=False       # IMPORTANT: disable debug in production
+        debug=False
     )
