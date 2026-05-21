@@ -8,12 +8,12 @@ from datetime import datetime
 app = Flask(__name__)
 CORS(app)
 
-# Important: Path setup
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # Root folder
+# ====================== PATH SETUP ======================
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FRONTEND_FOLDER = os.path.join(BASE_DIR, 'frontend')
 SESSIONS_FILE = os.path.join(BASE_DIR, "sessions.json")
 
-# ====================== FRONTEND SERVING ======================
+# ====================== FRONTEND ROUTES ======================
 @app.route('/')
 def serve_frontend():
     return send_from_directory(FRONTEND_FOLDER, 'index.html')
@@ -41,38 +41,44 @@ def save_sessions(data):
     with open(SESSIONS_FILE, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
 
-# ====================== API ROUTES ======================
+# ====================== API ======================
 @app.route("/api/chat", methods=["POST"])
 def chat():
-    body       = request.get_json()
+    body = request.get_json()
     session_id = body.get("session_id") or str(uuid.uuid4())
-    user_msg   = body.get("message", "").strip()
+    user_msg = body.get("message", "").strip()
 
     if not user_msg:
         return jsonify({"error": "Empty message"}), 400
 
     sessions = load_sessions()
+
     if session_id not in sessions:
-        sessions[session_id] = {"history": [], "created_at": datetime.now().isoformat()}
+        sessions[session_id] = {
+            "history": [],
+            "created_at": datetime.now().isoformat()
+        }
 
     history = sessions[session_id]["history"]
 
+    # Crisis logic
     if detect_crisis(user_msg):
-        reply      = get_crisis_response()
-        msg_type   = "crisis"
+        reply = get_crisis_response()
+        msg_type = "crisis"
     else:
-        reply      = get_ai_response(history, user_msg)
-        msg_type   = "stress" if detect_stress(user_msg) else "normal"
+        reply = get_ai_response(history, user_msg)
+        msg_type = "stress" if detect_stress(user_msg) else "normal"
 
-    history.append({"role": "user",      "content": user_msg})
+    history.append({"role": "user", "content": user_msg})
     history.append({"role": "assistant", "content": reply})
+
     sessions[session_id]["history"] = history
     save_sessions(sessions)
 
     return jsonify({
         "session_id": session_id,
-        "reply":      reply,
-        "type":       msg_type
+        "reply": reply,
+        "type": msg_type
     })
 
 @app.route("/api/history/<session_id>", methods=["GET"])
@@ -94,15 +100,28 @@ def new_session():
 def list_sessions():
     sessions = load_sessions()
     result = []
+
     for sid, data in sessions.items():
         h = data.get("history", [])
         first = next((m["content"][:40] for m in h if m["role"] == "user"), "New Session")
-        result.append({"id": sid, "preview": first, "created_at": data.get("created_at","")})
+
+        result.append({
+            "id": sid,
+            "preview": first,
+            "created_at": data.get("created_at", "")
+        })
+
     result.sort(key=lambda x: x["created_at"], reverse=True)
     return jsonify(result)
 
-
+# ====================== RAILWAY FIX (IMPORTANT) ======================
 if __name__ == "__main__":
-    print("🧠 Mindmosaic backend running on http://localhost:5000")
-    print("🌐 Frontend → http://localhost:5000")
-    app.run(debug=True, port=5000)
+    port = int(os.environ.get("PORT", 5000))  # Railway gives PORT dynamically
+
+    print(f"🧠 Mindmosaic backend running on 0.0.0.0:{port}")
+
+    app.run(
+        host="0.0.0.0",   # CRITICAL for Railway
+        port=port,
+        debug=False       # IMPORTANT: disable debug in production
+    )
